@@ -1,47 +1,32 @@
 package br.com.fiap.soat8.grupo14.hackathon.userservice.application.usecases;
 
-import java.util.Optional;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import br.com.fiap.soat8.grupo14.hackathon.userservice.application.exceptions.EmailAlreadyExistsException;
-import br.com.fiap.soat8.grupo14.hackathon.userservice.application.exceptions.UsernameAlreadyExistsException;
-import br.com.fiap.soat8.grupo14.hackathon.userservice.domain.model.User;
-import br.com.fiap.soat8.grupo14.hackathon.userservice.domain.repository.UserRepository;
-import br.com.fiap.soat8.grupo14.hackathon.userservice.infrastructure.security.JwtUtil;
+import br.com.fiap.soat8.grupo14.hackathon.userservice.application.exceptions.UsuarioExistenteException;
+import br.com.fiap.soat8.grupo14.hackathon.userservice.domain.model.Usuario;
+import br.com.fiap.soat8.grupo14.hackathon.userservice.domain.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class CadastrarUsuarioUseCase {
 
-    private final UserRepository userRepository;
+    private final UsuarioRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public User registerUser(String username, String email, String rawPassword) {
-        validateUserDoesNotExist(email, username);
+    public Usuario execute(String username, String rawPassword) {
+        validarUsuarioExistente(username);
         
         String encryptedPassword = passwordEncoder.encode(rawPassword);
-        User user = new User(null, username, email, encryptedPassword);
+        Usuario user = new Usuario(null, username, encryptedPassword);
         
         return userRepository.save(user);
     }
 
-    public boolean validatePassword(String rawPassword, String encryptedPassword) {
-        return passwordEncoder.matches(rawPassword, encryptedPassword);
-    }
-
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
-
-    private void validateUserDoesNotExist(String email, String username) {
-        if (userRepository.findByEmail(email).isPresent()) {
-            throw new EmailAlreadyExistsException(email);
-        }
+    private void validarUsuarioExistente(String username) {
         if (userRepository.findByUsername(username).isPresent()) {
-            throw new UsernameAlreadyExistsException(username);
+            throw new UsuarioExistenteException(username);
         }
     }
 }

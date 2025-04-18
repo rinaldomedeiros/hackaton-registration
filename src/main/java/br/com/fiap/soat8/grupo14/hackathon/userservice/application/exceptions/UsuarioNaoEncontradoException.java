@@ -4,7 +4,7 @@ public class UsuarioNaoEncontradoException extends RuntimeException {
 
 	private static final long serialVersionUID = -1075533397280162154L;
 
-	public UsuarioNaoEncontradoException(String email) {
-        super("Usuário com email " + email + " não encontrado");
+	public UsuarioNaoEncontradoException(String username) {
+        super("Usuário com username " + username + " não encontrado");
     }
 }

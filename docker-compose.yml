@@ -12,7 +12,6 @@ services:
       - '5433:5432'
     volumes:
       - dbdata_userservice:/var/lib/postgresql/data
-      - ./src/main/resources/db/init_database.sql:/docker-entrypoint-initdb.d/init_database.sql
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
     healthcheck:

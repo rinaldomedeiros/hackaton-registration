@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import br.com.fiap.soat8.grupo14.hackathon.userservice.domain.model.User;
-import br.com.fiap.soat8.grupo14.hackathon.userservice.domain.repository.UserRepository;
+import br.com.fiap.soat8.grupo14.hackathon.userservice.domain.model.Usuario;
+import br.com.fiap.soat8.grupo14.hackathon.userservice.domain.repository.UsuarioRepository;
 import br.com.fiap.soat8.grupo14.hackathon.userservice.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 
@@ -14,9 +14,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ListarUsuarioUseCase {
     
-    private final UserRepository repository;
+    private final UsuarioRepository repository;
     
-    public List<User> getAllUsers() {
+    public List<Usuario> execute() {
         return repository.findAll();
     }
 }
