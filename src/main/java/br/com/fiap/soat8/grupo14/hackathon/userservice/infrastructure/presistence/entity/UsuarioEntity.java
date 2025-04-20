@@ -1,4 +1,4 @@
-package br.com.fiap.soat8.grupo14.hackathon.userservice.infrastructure.precistence.entity;
+package br.com.fiap.soat8.grupo14.hackathon.userservice.infrastructure.presistence.entity;
 
 
 import jakarta.persistence.Entity;

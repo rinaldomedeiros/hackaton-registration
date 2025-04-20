@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +21,16 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 
 @Configuration
 public class SecurityConfig {
+
+  private static final String[] PUBLIC_URLS = {
+          "/usuarios/cadastrar",
+          "/usuarios/autenticar",
+          "/swagger-ui/**",
+          "/v3/api-docs/**",
+          "/swagger-resources/**",
+          "/webjars/**",
+          "/swagger-ui.html"
+  };
 
   private final JwtUtil jwtUtil;
 
@@ -37,23 +48,17 @@ public class SecurityConfig {
     JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(jwtUtil);
 
     http
-      .csrf().disable()
-      .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-      .authorizeHttpRequests(auth -> auth
-        .requestMatchers(
-          "/usuarios/cadastrar",
-          "/usuarios/autenticar",
-          "/swagger-ui/**",
-          "/v3/api-docs/**",
-          "/swagger-resources/**",
-          "/webjars/**",
-          "/swagger-ui.html"
-        ).permitAll()
-        .anyRequest().authenticated()
-      )
-      .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        .csrf(AbstractHttpConfigurer::disable)
+        .securityMatcher("/**")
+        .sessionManagement(session ->
+                session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .authorizeHttpRequests(auth ->
+                auth.requestMatchers(PUBLIC_URLS).permitAll()
+                        .anyRequest().authenticated())
+        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
+
   }
 
   @Bean

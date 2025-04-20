@@ -1,4 +1,15 @@
 services:
+  myapp:
+    build: .
+    container_name: registration
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "9091:8080"
+    networks:
+      - hackaton_net
+
   db:
     image: postgres:16.2
     shm_size: 1g
@@ -21,12 +32,12 @@ services:
       retries: 3
       start_period: 30s
     networks:
-      - userservice_net
+      - hackaton_net
 
 volumes:
   dbdata_userservice:
 
 networks:
-  userservice_net:
-    driver: bridge
-#    external: true
+  hackaton_net:
+    name: hackaton_net
+    external: true

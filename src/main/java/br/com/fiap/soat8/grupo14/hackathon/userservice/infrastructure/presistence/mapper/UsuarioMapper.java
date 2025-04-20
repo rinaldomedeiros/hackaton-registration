@@ -1,7 +1,7 @@
-package br.com.fiap.soat8.grupo14.hackathon.userservice.infrastructure.precistence.mapper;
+package br.com.fiap.soat8.grupo14.hackathon.userservice.infrastructure.presistence.mapper;
 
 import br.com.fiap.soat8.grupo14.hackathon.userservice.domain.model.Usuario;
-import br.com.fiap.soat8.grupo14.hackathon.userservice.infrastructure.precistence.entity.UsuarioEntity;
+import br.com.fiap.soat8.grupo14.hackathon.userservice.infrastructure.presistence.entity.UsuarioEntity;
 import br.com.fiap.soat8.grupo14.hackathon.userservice.presentation.dto.UserResponseDTO;
 
 public class UsuarioMapper {

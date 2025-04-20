@@ -1,4 +1,4 @@
-package br.com.fiap.soat8.grupo14.hackathon.userservice.infrastructure.precistence.repository;
+package br.com.fiap.soat8.grupo14.hackathon.userservice.infrastructure.presistence.repository;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import br.com.fiap.soat8.grupo14.hackathon.userservice.domain.model.Usuario;
 import br.com.fiap.soat8.grupo14.hackathon.userservice.domain.repository.UsuarioRepository;
-import br.com.fiap.soat8.grupo14.hackathon.userservice.infrastructure.precistence.entity.UsuarioEntity;
-import br.com.fiap.soat8.grupo14.hackathon.userservice.infrastructure.precistence.mapper.UsuarioMapper;
+import br.com.fiap.soat8.grupo14.hackathon.userservice.infrastructure.presistence.entity.UsuarioEntity;
+import br.com.fiap.soat8.grupo14.hackathon.userservice.infrastructure.presistence.mapper.UsuarioMapper;
 
 
 @Repository

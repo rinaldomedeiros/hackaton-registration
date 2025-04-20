@@ -4,6 +4,7 @@ package br.com.fiap.soat8.grupo14.hackathon.userservice.interfaceadapters.contro
 import java.util.List;
 import java.util.stream.Collectors;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,7 @@ import br.com.fiap.soat8.grupo14.hackathon.userservice.application.usecases.Cada
 import br.com.fiap.soat8.grupo14.hackathon.userservice.application.usecases.ConsultarUsuarioPorUsernamelUseCase;
 import br.com.fiap.soat8.grupo14.hackathon.userservice.application.usecases.ListarUsuarioUseCase;
 import br.com.fiap.soat8.grupo14.hackathon.userservice.domain.model.Usuario;
-import br.com.fiap.soat8.grupo14.hackathon.userservice.infrastructure.precistence.mapper.UsuarioMapper;
+import br.com.fiap.soat8.grupo14.hackathon.userservice.infrastructure.presistence.mapper.UsuarioMapper;
 import br.com.fiap.soat8.grupo14.hackathon.userservice.presentation.dto.AuthenticationRequestDTO;
 import br.com.fiap.soat8.grupo14.hackathon.userservice.presentation.dto.AuthenticationResponseDTO;
 import br.com.fiap.soat8.grupo14.hackathon.userservice.presentation.dto.UserRequestDTO;
@@ -53,7 +54,11 @@ public class UsuarioController {
   }
   
   @GetMapping
-  @Operation(summary = "Este endpoint é responsável por listar todos os usuários.")
+  @Operation(
+          summary = "Este endpoint é responsável por listar todos os usuários.",
+          security = { @SecurityRequirement(name = "Bearer Authentication") }
+
+  )
   public ResponseEntity<?> consultarUsuarios() {
 	  List<Usuario> users = listarUsuarioUseCase.execute();
 	  List<UserResponseDTO> response = users.stream()
@@ -63,7 +68,11 @@ public class UsuarioController {
   }
   
   @GetMapping("/consultar/{username}")
-  @Operation(summary = "Este endpoint é responsável por consultar um usuário.")
+  @Operation(
+          summary = "Este endpoint é responsável por consultar um usuário.",
+          security = { @SecurityRequirement(name = "Bearer Authentication") }
+
+  )
   public ResponseEntity<?> consultarUsuario(@RequestParam String username) {
 	  Usuario user = consultarUsuarioPorUsernamelUseCase.execute(username);
 	  UserResponseDTO response = UsuarioMapper.toResponse(user);
