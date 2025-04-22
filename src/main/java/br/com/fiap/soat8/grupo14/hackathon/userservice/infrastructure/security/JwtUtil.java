@@ -1,6 +1,5 @@
 package br.com.fiap.soat8.grupo14.hackathon.userservice.infrastructure.security;
 
-import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 
@@ -25,13 +24,19 @@ public class JwtUtil {
     @Value("${jwt.expiration}")
     private Long expiration;
 
+    protected Date getCurrentTime() {
+        return new Date();
+    }
+    
     public String generateToken(String username) {
+        Date now = getCurrentTime();
+        Date expiryDate = new Date(now.getTime() + expiration);
         return Jwts.builder()
-          .setSubject(username)
-          .setIssuedAt(new Date())
-          .setExpiration(new Date(System.currentTimeMillis() + expiration))
-          .signWith(getSigningKey())
-          .compact();
+            .setSubject(username)
+            .setIssuedAt(now)
+            .setExpiration(expiryDate)
+            .signWith(getSigningKey())
+            .compact();
     }
     
     public boolean validateToken(String token) {
@@ -60,7 +65,6 @@ public class JwtUtil {
       }
 
     public Key getSigningKey() {
-        byte[] keyBytes = secret.getBytes(StandardCharsets.UTF_8);
-        return Keys.hmacShaKeyFor(keyBytes);
+        return Keys.hmacShaKeyFor(secret.getBytes());
     }
 }

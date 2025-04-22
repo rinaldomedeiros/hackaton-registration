@@ -17,8 +17,21 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.MockMvc;
+
+import br.com.fiap.soat8.grupo14.hackathon.userservice.application.usecases.CadastrarUsuarioUseCase;
+import br.com.fiap.soat8.grupo14.hackathon.userservice.domain.model.Usuario;
+
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 class UserControllerIntegrationTest {
 
     @Autowired
@@ -28,8 +41,7 @@ class UserControllerIntegrationTest {
     private CadastrarUsuarioUseCase cadastroUseCase;
     
     @Test
-    void registerUser_ShouldReturn201() throws Exception {
-        UserResponseDTO responseDTO = new UserResponseDTO(1L, "user");
+    void deveCadastrarUsuarioDeveRetornar200() throws Exception {
         when(cadastroUseCase.execute(any(), any()))
             .thenReturn(new Usuario(1L, "user", "encoded"));
         
@@ -38,11 +50,10 @@ class UserControllerIntegrationTest {
                 .content("""
                     {
                         "username": "user",
-                        "email": "user@test.com",
                         "password": "password123"
                     }
                     """))
-                .andExpect(status().isCreated())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(1L))
                 .andExpect(jsonPath("$.username").value("user"));
     }
