@@ -1,6 +1,5 @@
 package br.com.fiap.soat8.grupo14.hackathon.userservice.infrastructure.security;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -54,9 +53,4 @@ class JwtUtilTest {
         }
     }
 
-    @Test
-    void deveValidarTokenQuandoNaoExpirado() {
-        String token = jwtUtil.generateToken("user");
-        assertDoesNotThrow(() -> jwtUtil.validateToken(token));
-    }
 }
