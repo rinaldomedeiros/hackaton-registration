@@ -14,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import br.com.fiap.soat8.grupo14.hackathon.userservice.application.exceptions.CredencialInvalidaException;
-import br.com.fiap.soat8.grupo14.hackathon.userservice.application.usecases.AutenticarUsuarioUseCase;
 import br.com.fiap.soat8.grupo14.hackathon.userservice.domain.model.Usuario;
 import br.com.fiap.soat8.grupo14.hackathon.userservice.domain.repository.UsuarioRepository;
 import br.com.fiap.soat8.grupo14.hackathon.userservice.infrastructure.security.JwtUtil;

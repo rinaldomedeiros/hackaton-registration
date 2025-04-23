@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +17,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
 import br.com.fiap.soat8.grupo14.hackathon.userservice.application.usecases.CadastrarUsuarioUseCase;
@@ -23,9 +26,12 @@ import br.com.fiap.soat8.grupo14.hackathon.userservice.application.usecases.Cons
 import br.com.fiap.soat8.grupo14.hackathon.userservice.application.usecases.ListarUsuarioUseCase;
 import br.com.fiap.soat8.grupo14.hackathon.userservice.domain.model.Usuario;
 import br.com.fiap.soat8.grupo14.hackathon.userservice.infrastructure.security.JwtUtil;
+import br.com.fiap.soat8.grupo14.hackathon.userservice.presentation.dto.UserResponseDTO;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
+@TestPropertySource(locations = "classpath:application-test.yml")
 class UsuarioControllerTest {
 
     @Autowired
@@ -47,6 +53,7 @@ class UsuarioControllerTest {
     void setUp() {
         when(jwtUtil.validateToken(any(String.class))).thenReturn(true);
         when(jwtUtil.extractUsername(any(String.class))).thenReturn("user");
+        when(jwtUtil.getCurrentDate()).thenReturn(new Date());
     }
 
     @Test
@@ -89,16 +96,20 @@ class UsuarioControllerTest {
 
     @Test
     void deveConsultarOUsuarioDeveRetornar200() throws Exception {
+        Usuario usuarioMock = new Usuario(1L, "user", "encodedPassword");
+        UserResponseDTO responseMock = new UserResponseDTO(1L, "user");
+        
         when(consultarUsuarioPorUsernamelUseCase.execute("user"))
-            .thenReturn(new Usuario(1L, "user", "encoded"));
-
+            .thenReturn(usuarioMock);
+        
         mockMvc.perform(get("/usuarios/consultar/user")
                 .header("Authorization", "Bearer valid-token"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1L))
-                .andExpect(jsonPath("$.username").value("user"));
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.id").value(1L))
+            .andExpect(jsonPath("$.username").value("user"));
     }
-
+    
+    
     @Test
     void deveConsultarUsuarioSemAutorizaçãoDeveRetornar403() throws Exception {
         mockMvc.perform(get("/usuarios/consultar/user"))

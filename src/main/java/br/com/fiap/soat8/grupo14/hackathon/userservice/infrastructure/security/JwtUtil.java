@@ -24,17 +24,15 @@ public class JwtUtil {
     @Value("${jwt.expiration}")
     private Long expiration;
 
-    protected Date getCurrentTime() {
+    public Date getCurrentDate() {
         return new Date();
     }
     
     public String generateToken(String username) {
-        Date now = getCurrentTime();
-        Date expiryDate = new Date(now.getTime() + expiration);
         return Jwts.builder()
             .setSubject(username)
-            .setIssuedAt(now)
-            .setExpiration(expiryDate)
+            .setIssuedAt(getCurrentDate())
+            .setExpiration(new Date(getCurrentDate().getTime() + expiration))
             .signWith(getSigningKey())
             .compact();
     }
@@ -50,8 +48,6 @@ public class JwtUtil {
             throw new TokenExpiradoException("Token expirado");
         } catch (UnsupportedJwtException | MalformedJwtException | SignatureException ex) {
             throw new TokenInvalidoException("Token inválido");
-        } catch (IllegalArgumentException ex) {
-            throw new TokenInvalidoException("Token não pode ser vazio");
         }
     }
 

@@ -2,7 +2,12 @@ package br.com.fiap.soat8.grupo14.hackathon.userservice.application.usecases;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,11 +17,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import br.com.fiap.soat8.grupo14.hackathon.userservice.application.exceptions.UsuarioExistenteException;
-import br.com.fiap.soat8.grupo14.hackathon.userservice.application.usecases.CadastrarUsuarioUseCase;
 import br.com.fiap.soat8.grupo14.hackathon.userservice.domain.model.Usuario;
 import br.com.fiap.soat8.grupo14.hackathon.userservice.domain.repository.UsuarioRepository;
-
-import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 class CadastrarUsuarioUseCaseTest {
