@@ -1,16 +1,5 @@
 package br.com.fiap.soat8.grupo14.hackathon.userservice.integration;
 
-import br.com.fiap.soat8.grupo14.hackathon.userservice.application.usecases.CadastrarUsuarioUseCase;
-import br.com.fiap.soat8.grupo14.hackathon.userservice.domain.model.Usuario;
-import br.com.fiap.soat8.grupo14.hackathon.userservice.presentation.dto.UserResponseDTO;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
-import org.springframework.test.web.servlet.MockMvc;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -21,9 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import br.com.fiap.soat8.grupo14.hackathon.userservice.application.usecases.CadastrarUsuarioUseCase;
@@ -38,13 +27,13 @@ class UserControllerIntegrationTest {
     private MockMvc mockMvc;
     
     @MockitoBean
-    private CadastrarUsuarioUseCase cadastroUseCase;
+    private CadastrarUsuarioUseCase cadastrarUsuarioUseCase;
     
     @Test
     void deveCadastrarUsuarioDeveRetornar200() throws Exception {
-        when(cadastroUseCase.execute(any(), any()))
+        when(cadastrarUsuarioUseCase.execute(any(), any()))
             .thenReturn(new Usuario(1L, "user", "encoded"));
-        
+
         mockMvc.perform(post("/usuarios/cadastrar")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("""

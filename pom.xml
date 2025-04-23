@@ -151,10 +151,6 @@
                         </goals>
                         <configuration>
                             <includes>
-<!--                                <include>br/com/fiap/soat8/grupo14/hackathon/userservice/application/usecases/**</include>-->
-<!--                                <include>br/com/fiap/soat8/grupo14/hackathon/userservice/interfaceadapters/controller/**</include>-->
-<!--                                <include>br/com/fiap/soat8/grupo14/hackathon/userservice/infrastructure/security/**</include>-->
-<!--                                <include>br/com/fiap/soat8/grupo14/hackathon/userservice/interfaceadapters/controller/**</include>-->
                                 <include>**/usecases/**</include>
                                 <include>**/controller/**</include>
                                 <include>**/security/**</include>
@@ -162,7 +158,6 @@
 
                             </includes>
                             <excludes>
-<!--                                <exclude>br/com/fiap/soat8/grp14/techchallenge/presentation/controllers/util/**</exclude>-->
                                 <exclude>**/dto/**</exclude>
                                 <exclude>**/model/**</exclude>
                                 <exclude>**/entity/**</exclude>
