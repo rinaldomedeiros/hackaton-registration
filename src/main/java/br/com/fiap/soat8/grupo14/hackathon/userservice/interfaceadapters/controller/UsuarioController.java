@@ -74,7 +74,7 @@ public class UsuarioController {
           security = { @SecurityRequirement(name = "Bearer Authentication") }
 
   )
-  public ResponseEntity<?> consultarUsuario(@RequestParam String username) {
+  public ResponseEntity<?> consultarUsuario(@PathVariable String username) {
 	  Usuario user = consultarUsuarioPorUsernamelUseCase.execute(username);
 	  UserResponseDTO response = UsuarioMapper.toResponse(user);
 	  return ResponseEntity.ok(response);
